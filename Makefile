@@ -16,3 +16,9 @@ force_release: clean
 	git push --tags
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
+
+dev_release:
+	python setup.py develop
+
+dev_clean:
+	python setup.py develop --uninstall 
