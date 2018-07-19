@@ -1,3 +1,11 @@
+Some modification of mine:
+
+add a command line option --rate_limit 
+restrict worker to proceed a job in a fixed time (in seconds)
+0 for no limit which means run instantly
+10 means 10 seconds, so the worker will process a job every 10 seconds
+
+
 RQ (_Redis Queue_) is a simple Python library for queueing jobs and processing
 them in the background with workers.  It is backed by Redis and it is designed
 to have a low barrier to entry.  It should be integrated in your web stack
