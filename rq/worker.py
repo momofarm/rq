@@ -152,14 +152,14 @@ class Worker(object):
                      queue_class=queue_class)
 
         worker.refresh()
-
-        return worker
+	
+	return worker
 
     def __init__(self, queues, name=None, default_result_ttl=DEFAULT_RESULT_TTL,
                  connection=None, exc_handler=None, exception_handlers=None,
                  default_worker_ttl=DEFAULT_WORKER_TTL, job_class=None,
                  queue_class=None,
-                 job_monitoring_interval=DEFAULT_JOB_MONITORING_INTERVAL):  # noqa
+                 job_monitoring_interval=DEFAULT_JOB_MONITORING_INTERVAL, limit=0):  # noqa
         if connection is None:
             connection = get_current_connection()
         self.connection = connection
@@ -193,6 +193,7 @@ class Worker(object):
         self.failed_job_count = 0
         self.total_working_time = 0
         self.birth_date = None
+	self.default_limit = limit
 
         # By default, push the "move-to-failed-queue" exception handler onto
         # the stack
@@ -482,7 +483,10 @@ class Worker(object):
                         break
 
                     timeout = None if burst else max(1, self.default_worker_ttl - 15)
-
+		
+	            if self.default_limit > 0:
+		    	time.sleep(self.default_limit)
+	            
                     result = self.dequeue_job_and_maintain_ttl(timeout)
                     if result is None:
                         if burst:

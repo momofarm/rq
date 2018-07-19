@@ -183,10 +183,11 @@ def info(cli_config, interval, raw, only_queues, only_workers, by_queue, queues,
 @click.option('--exception-handler', help='Exception handler(s) to use', multiple=True)
 @click.option('--pid', help='Write the process ID number to a file at the specified path')
 @click.argument('queues', nargs=-1)
+@click.option("--rate_limit", help='limit job execution rate in seconds, 0 for no limit, default is 0', type=int)
 @pass_cli_config
 def worker(cli_config, burst, logging_level, name, results_ttl,
            worker_ttl, job_monitoring_interval, verbose, quiet, sentry_dsn,
-           exception_handler, pid, queues, **options):
+           exception_handler, pid, queues, rate_limit, **options):
     """Starts an RQ worker."""
 
     settings = read_config_file(cli_config.config) if cli_config.config else {}
@@ -223,7 +224,8 @@ def worker(cli_config, burst, logging_level, name, results_ttl,
                                          job_monitoring_interval=job_monitoring_interval,
                                          job_class=cli_config.job_class,
                                          queue_class=cli_config.queue_class,
-                                         exception_handlers=exception_handlers or None)
+                                         exception_handlers=exception_handlers or None,
+					 limit=rate_limit)
 
         # Should we configure Sentry?
         if sentry_dsn:
@@ -265,3 +267,6 @@ def resume(cli_config, **options):
     """Resumes processing of queues, that where suspended with `rq suspend`"""
     connection_resume(cli_config.connection)
     click.echo("Resuming workers.")
+
+
+	
