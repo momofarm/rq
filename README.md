@@ -5,6 +5,12 @@ restrict worker to proceed a job in a fixed time (in seconds)
 0 for no limit which means run instantly
 10 means 10 seconds, so the worker will process a job every 10 seconds
 
+for example:
+	 # this line process a job every 10 seconds
+	 rq worker --path tutorial/rq/ --rate_limit 10 
+
+	 # this will process every instantly 
+	  rq worker --path tutorial/rq/ --rate_limit 0 
 
 RQ (_Redis Queue_) is a simple Python library for queueing jobs and processing
 them in the background with workers.  It is backed by Redis and it is designed
