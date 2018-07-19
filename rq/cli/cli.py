@@ -183,7 +183,7 @@ def info(cli_config, interval, raw, only_queues, only_workers, by_queue, queues,
 @click.option('--exception-handler', help='Exception handler(s) to use', multiple=True)
 @click.option('--pid', help='Write the process ID number to a file at the specified path')
 @click.argument('queues', nargs=-1)
-@click.option("--rate_limit", help='limit job execution rate in seconds, 0 for no limit, default is 0', type=int)
+@click.option("--rate_limit", help='restrict worker to proceed a job in a fixed time (in seconds), 0 for no limit, default is 0', type=int)
 @pass_cli_config
 def worker(cli_config, burst, logging_level, name, results_ttl,
            worker_ttl, job_monitoring_interval, verbose, quiet, sentry_dsn,
