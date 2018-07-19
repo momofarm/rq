@@ -6,6 +6,7 @@ restrict worker to proceed a job in a fixed time (in seconds)
 10 means 10 seconds, so the worker will process a job every 10 seconds
 
 for example:
+
 	 # this line process a job every 10 seconds
 	 rq worker --path tutorial/rq/ --rate_limit 10 
 
